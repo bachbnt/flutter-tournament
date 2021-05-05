@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tournament/add_team_screen.dart';
+import 'package:tournament/login_screen.dart';
 import 'package:tournament/result_screen.dart';
 import 'package:tournament/split_board_screen.dart';
 
@@ -45,6 +46,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 },
                 child: Text('Kết quả')),
+            Padding(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()),
+                    );
+                  },
+                  child: Text('Đăng xuất')),
+            ),
           ],
         ),
       ),

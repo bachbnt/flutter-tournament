@@ -28,7 +28,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                 boardResults[index].results[i].team1.name)),
                         Expanded(
                             child: Text(
-                                '${boardResults[index].results[i].score1} - ${boardResults[index].results[i].score2}')),
+                                '${boardResults[index].results[i].scoreTeam1} - ${boardResults[index].results[i].scoreTeam2}')),
                         Expanded(
                             child: Text(
                                 boardResults[index].results[i].team2.name)),

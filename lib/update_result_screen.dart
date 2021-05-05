@@ -16,8 +16,8 @@ class _UpdateResultScreenState extends State<UpdateResultScreen> {
 
   @override
   void initState() {
-    controller1 = TextEditingController(text: widget.result.score1.toString());
-    controller2 = TextEditingController(text: widget.result.score1.toString());
+    controller1 = TextEditingController(text: widget.result.scoreTeam1.toString());
+    controller2 = TextEditingController(text: widget.result.scoreTeam2.toString());
   }
 
   @override
