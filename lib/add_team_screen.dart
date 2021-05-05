@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tournament/models/team.dart';
 
 class AddTeamScreen extends StatefulWidget {
   @override
@@ -6,30 +7,36 @@ class AddTeamScreen extends StatefulWidget {
 }
 
 class _AddTeamScreenState extends State<AddTeamScreen> {
+  List<Team> teams = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        child: Padding(
-          padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-          child: Column(
+      appBar: AppBar(
+        title: Text('Thêm đội'),
+      ),
+      body: Column(
+        children: [
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: Text('Thêm đội'),
+              Expanded(
+                child: TextField(
+                  decoration: InputDecoration(labelText: 'Tên đội'),
+                ),
               ),
-              TextField(
-                decoration: InputDecoration(labelText: 'Tên đội'),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 16.0),
-                child: ElevatedButton(onPressed: () {}, child: Text('Thêm')),
-              )
+              ElevatedButton(onPressed: () {}, child: Text('Thêm đội'))
             ],
           ),
-        ),
+          Expanded(
+            child: ListView.builder(
+                itemCount: teams.length,
+                itemBuilder: (context, i) => Container(
+                      child: Text(teams[i].name),
+                    )),
+          )
+        ],
       ),
     );
   }
