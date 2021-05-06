@@ -1,13 +1,16 @@
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
-import 'package:tournament/home_screen.dart';
-import 'package:tournament/register_screen.dart';
+import 'package:tournament/prefrerences_util.dart';
+import 'package:tournament/screens/home_screen.dart';
+import 'package:tournament/screens/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen>
+    with AfterLayoutMixin<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,5 +57,15 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void afterFirstLayout(BuildContext context) async {
+    if ((await PreferencesUtil.getToken()) != null) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+      );
+    }
   }
 }

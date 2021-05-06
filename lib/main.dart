@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tournament/login_screen.dart';
+import 'package:tournament/screens/login_screen.dart';
 
 void main() {
   runApp(MyApp());

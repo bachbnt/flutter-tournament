@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tournament/models/board_result.dart';
-import 'package:tournament/update_result_screen.dart';
+import 'package:tournament/screens/update_result_screen.dart';
 
 class ResultScreen extends StatefulWidget {
   @override

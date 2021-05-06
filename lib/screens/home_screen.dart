@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tournament/add_team_screen.dart';
-import 'package:tournament/login_screen.dart';
-import 'package:tournament/result_screen.dart';
-import 'package:tournament/split_board_screen.dart';
+import 'package:tournament/screens/add_team_screen.dart';
+import 'package:tournament/screens/login_screen.dart';
+import 'package:tournament/screens/result_screen.dart';
+import 'package:tournament/screens/split_board_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
