@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tournament/api_service.dart';
 import 'package:tournament/screens/add_team_screen.dart';
 import 'package:tournament/screens/login_screen.dart';
 import 'package:tournament/screens/result_screen.dart';
@@ -49,11 +50,16 @@ class _HomeScreenState extends State<HomeScreen> {
             Padding(
               padding: const EdgeInsets.only(top: 16.0),
               child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()),
-                    );
+                  onPressed: () async {
+                    if (await ApiService().signOut()) {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(SnackBar(content: Text('Thất bại')));
+                    }
                   },
                   child: Text('Đăng xuất')),
             ),

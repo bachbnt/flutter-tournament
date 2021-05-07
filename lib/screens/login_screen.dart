@@ -1,5 +1,6 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:tournament/api_service.dart';
 import 'package:tournament/prefrerences_util.dart';
 import 'package:tournament/screens/home_screen.dart';
 import 'package:tournament/screens/register_screen.dart';
@@ -11,6 +12,10 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen>
     with AfterLayoutMixin<LoginScreen> {
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+  bool loading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,10 +32,12 @@ class _LoginScreenState extends State<LoginScreen>
                 child: Text('ĐĂNG NHẬP'),
               ),
               TextField(
-                decoration: InputDecoration(labelText: 'Email'),
+                decoration: InputDecoration(labelText: 'Tài khoản'),
+                controller: usernameController,
               ),
               TextField(
                 decoration: InputDecoration(labelText: 'Mật khẩu'),
+                controller: passwordController,
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 16.0, top: 16.0),
@@ -45,12 +52,28 @@ class _LoginScreenState extends State<LoginScreen>
                     child: Text('Đăng ký')),
               ),
               ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => HomeScreen()),
-                    );
-                  },
+                  onPressed: loading
+                      ? null
+                      : () async {
+                          setState(() {
+                            loading = true;
+                          });
+                          if (await ApiService().signIn(
+                              usernameController.text.trim(),
+                              passwordController.text.trim())) {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomeScreen()),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Thất bại')));
+                          }
+                          setState(() {
+                            loading = false;
+                          });
+                        },
                   child: Text('Đăng nhập'))
             ],
           ),
@@ -62,6 +85,7 @@ class _LoginScreenState extends State<LoginScreen>
   @override
   void afterFirstLayout(BuildContext context) async {
     if ((await PreferencesUtil.getToken()) != null) {
+      await ApiService().init();
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => HomeScreen()),

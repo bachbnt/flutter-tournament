@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tournament/api_service.dart';
+import 'package:tournament/screens/home_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -6,6 +8,11 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  final usernameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  bool loading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,14 +28,44 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: Text('ĐĂNG KÝ'),
               ),
               TextField(
+                decoration: InputDecoration(labelText: 'Tài khoản'),
+                controller: usernameController,
+              ),
+              TextField(
                 decoration: InputDecoration(labelText: 'Email'),
+                controller: emailController,
               ),
               TextField(
                 decoration: InputDecoration(labelText: 'Mật khẩu'),
+                controller: passwordController,
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 16.0),
-                child: ElevatedButton(onPressed: () {}, child: Text('Đăng ký')),
+                child: ElevatedButton(
+                    onPressed: loading
+                        ? null
+                        : () async {
+                            setState(() {
+                              loading = true;
+                            });
+                            if (await ApiService().signUp(
+                                usernameController.text.trim(),
+                                emailController.text.trim(),
+                                passwordController.text.trim())) {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HomeScreen()),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('Thất bại')));
+                            }
+                            setState(() {
+                              loading = false;
+                            });
+                          },
+                    child: Text('Đăng ký')),
               )
             ],
           ),
