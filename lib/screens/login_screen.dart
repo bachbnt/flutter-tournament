@@ -36,6 +36,7 @@ class _LoginScreenState extends State<LoginScreen>
                 controller: usernameController,
               ),
               TextField(
+                obscureText: true,
                 decoration: InputDecoration(labelText: 'Mật khẩu'),
                 controller: passwordController,
               ),

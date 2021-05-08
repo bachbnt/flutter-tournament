@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tournament/api_service.dart';
 import 'package:tournament/screens/add_team_screen.dart';
+import 'package:tournament/screens/knockout_screen.dart';
 import 'package:tournament/screens/login_screen.dart';
 import 'package:tournament/screens/result_screen.dart';
 import 'package:tournament/screens/split_board_screen.dart';
@@ -48,21 +49,29 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
                 child: Text('Kết quả')),
             Padding(
-              padding: const EdgeInsets.only(top: 16.0),
+              padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
               child: ElevatedButton(
-                  onPressed: () async {
-                    if (await ApiService().signOut()) {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => LoginScreen()),
-                      );
-                    } else {
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text('Thất bại')));
-                    }
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => KnockoutScreen()),
+                    );
                   },
-                  child: Text('Đăng xuất')),
+                  child: Text('Đấu loại')),
             ),
+            ElevatedButton(
+                onPressed: () async {
+                  if (await ApiService().signOut()) {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text('Thất bại')));
+                  }
+                },
+                child: Text('Đăng xuất')),
           ],
         ),
       ),

@@ -36,6 +36,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 controller: emailController,
               ),
               TextField(
+                obscureText: true,
                 decoration: InputDecoration(labelText: 'Mật khẩu'),
                 controller: passwordController,
               ),

@@ -22,13 +22,16 @@ class ApiService {
 
   Future<void> init() async {
     String token = await PreferencesUtil.getToken();
-    _headers = {'Authorization': 'Bearer ${token}'};
+    _headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json'
+    };
   }
 
   Future<bool> signIn(String username, String password) async {
     try {
       final raw = await http.post(Uri.parse('${_baseUrl}auth/local/'),
-          body: {"identifier": username, "password": password});
+          body: jsonEncode({"identifier": username, "password": password}));
       if (raw.statusCode == 200) {
         final res = SignInRes.fromJson(jsonDecode(raw.body));
         await PreferencesUtil.setToken(res.jwt);
@@ -44,7 +47,8 @@ class ApiService {
   Future<bool> signUp(String username, String email, String password) async {
     try {
       final raw = await http.post(Uri.parse('${_baseUrl}auth/local/register'),
-          body: {"username": username, "email": email, "password": password});
+          body: jsonEncode(
+              {"username": username, "email": email, "password": password}));
       if (raw.statusCode == 200) {
         final res = SignUpRes.fromJson(jsonDecode(raw.body));
         await PreferencesUtil.setToken(res.jwt);
@@ -70,7 +74,7 @@ class ApiService {
   Future<bool> postTeam(String name) async {
     try {
       final raw = await http.post(Uri.parse('${_baseUrl}teams'),
-          body: {'name': name}, headers: _headers);
+          body: jsonEncode({'name': name}), headers: _headers);
       if (raw.statusCode == 200) {
         return true;
       }
@@ -118,9 +122,15 @@ class ApiService {
     return matches;
   }
 
-  Future<bool> updateMatch(int score1, int score2) async {
+  Future<bool> updateMatch(String id, int score1, int score2) async {
     try {
-      return true;
+      final raw = await http.put(Uri.parse('${_baseUrl}matches/$id'),
+          body: jsonEncode({'team1Score': score1, 'team2Score': score2}),
+          headers: _headers);
+      if (raw.statusCode == 200) {
+        return true;
+      }
+      return false;
     } catch (error) {
       return false;
     }

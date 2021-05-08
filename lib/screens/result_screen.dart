@@ -16,6 +16,15 @@ class _ResultScreenState extends State<ResultScreen> {
     return Scaffold(
         appBar: AppBar(
           title: Text('Kết quả'),
+          actions: [
+            IconButton(
+                icon: Icon(Icons.refresh),
+                onPressed: () {
+                  setState(() {
+                    matchResults = ApiService().getMatches();
+                  });
+                })
+          ],
         ),
         body: FutureBuilder<List<MatchResult>>(
             future: matchResults,
@@ -138,12 +147,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                                     builder: (context) =>
                                                         UpdateResultScreen(
                                                             snapshot.data[i])),
-                                              ).then((_) {
-                                                setState(() {
-                                                  matchResults =
-                                                      ApiService().getMatches();
-                                                });
-                                              });
+                                              );
                                             },
                                           ),
                                         ),

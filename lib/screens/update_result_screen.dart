@@ -80,6 +80,7 @@ class _UpdateResultScreenState extends State<UpdateResultScreen> {
                           loading = true;
                         });
                         if (await ApiService().updateMatch(
+                            widget.matchResult.id,
                             int.parse(controller1.text.trim()),
                             int.parse(controller2.text.trim()))) {
                           ScaffoldMessenger.of(context).showSnackBar(
