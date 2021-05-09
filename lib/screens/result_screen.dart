@@ -147,7 +147,13 @@ class _ResultScreenState extends State<ResultScreen> {
                                                     builder: (context) =>
                                                         UpdateResultScreen(
                                                             snapshot.data[i])),
-                                              );
+                                              ).then((value) => {
+                                                    setState(() {
+                                                      matchResults =
+                                                          ApiService()
+                                                              .getMatches();
+                                                    })
+                                                  });
                                             },
                                           ),
                                         ),

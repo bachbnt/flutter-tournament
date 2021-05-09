@@ -1,6 +1,6 @@
 // To parse this JSON data, do
 //
-//     final matchRes = matchResFromJson(jsonString);
+//     final matchResult = matchResultFromJson(jsonString);
 
 import 'dart:convert';
 
@@ -12,40 +12,44 @@ String matchResultToJson(List<MatchResult> data) =>
 
 class MatchResult {
   MatchResult({
+    this.publishedAt,
     this.createdAt,
     this.updatedAt,
     this.board,
+    this.match,
     this.team1,
     this.team2,
-    this.match,
     this.id,
   });
 
+  DateTime publishedAt;
   DateTime createdAt;
   DateTime updatedAt;
   Board board;
+  Match match;
   Team team1;
   Team team2;
-  Match match;
   String id;
 
   factory MatchResult.fromJson(Map<String, dynamic> json) => MatchResult(
+        publishedAt: DateTime.parse(json["published_at"]),
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
         board: Board.fromJson(json["board"]),
+        match: Match.fromJson(json["match"]),
         team1: Team.fromJson(json["team1"]),
         team2: Team.fromJson(json["team2"]),
-        match: Match.fromJson(json["match"]),
         id: json["id"],
       );
 
   Map<String, dynamic> toJson() => {
+        "published_at": publishedAt.toIso8601String(),
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
         "board": board.toJson(),
+        "match": match.toJson(),
         "team1": team1.toJson(),
         "team2": team2.toJson(),
-        "match": match.toJson(),
         "id": id,
       };
 }
@@ -78,58 +82,54 @@ class Team {
   Team({
     this.id,
     this.name,
-    this.teamId,
+    this.boardId,
   });
 
   String id;
   String name;
-  String teamId;
+  String boardId;
 
   factory Team.fromJson(Map<String, dynamic> json) => Team(
         id: json["_id"],
         name: json["name"],
-        teamId: json["id"],
+        boardId: json["id"],
       );
 
   Map<String, dynamic> toJson() => {
         "_id": id,
         "name": name,
-        "id": teamId,
+        "id": boardId,
       };
 }
 
 class Match {
   Match({
-    this.status,
-    this.id,
     this.team1Score,
     this.team2Score,
-    this.date,
+    this.status,
+    this.id,
     this.matchId,
   });
 
-  String status;
-  String id;
   int team1Score;
   int team2Score;
-  DateTime date;
+  dynamic status;
+  String id;
   String matchId;
 
   factory Match.fromJson(Map<String, dynamic> json) => Match(
-        status: json["status"],
-        id: json["_id"],
         team1Score: json["team1Score"],
         team2Score: json["team2Score"],
-        date: DateTime.parse(json["date"]),
+        status: json["status"],
+        id: json["_id"],
         matchId: json["id"],
       );
 
   Map<String, dynamic> toJson() => {
-        "status": status,
-        "_id": id,
         "team1Score": team1Score,
         "team2Score": team2Score,
-        "date": date.toIso8601String(),
+        "status": status,
+        "_id": id,
         "id": matchId,
       };
 }
