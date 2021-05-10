@@ -38,23 +38,30 @@ class _AddTeamScreenState extends State<AddTeamScreen> {
                             onPressed: loading
                                 ? null
                                 : () async {
-                                    setState(() {
-                                      loading = true;
-                                    });
-                                    if (await ApiService()
-                                        .postTeam(teamController.text.trim())) {
+                                    if (teamController.text.trim().isNotEmpty) {
                                       setState(() {
-                                        teams = ApiService().getTeams();
-                                        teamController.clear();
+                                        loading = true;
+                                      });
+                                      if (await ApiService().postTeam(
+                                          teamController.text.trim())) {
+                                        setState(() {
+                                          teams = ApiService().getTeams();
+                                          teamController.clear();
+                                        });
+                                      } else {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                                content: Text('Thất bại')));
+                                      }
+                                      setState(() {
+                                        loading = false;
                                       });
                                     } else {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(SnackBar(
-                                              content: Text('Thất bại')));
+                                              content:
+                                                  Text('Không được trống')));
                                     }
-                                    setState(() {
-                                      loading = false;
-                                    });
                                   },
                             child: Text('Thêm đội')))
                   ],

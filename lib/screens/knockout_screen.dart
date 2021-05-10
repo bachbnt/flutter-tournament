@@ -222,9 +222,14 @@ class _KnockoutScreenState extends State<KnockoutScreen> {
                                             child: Center(
                                               child: TextButton(
                                                 onPressed: snapshot
-                                                        .data
-                                                        .semifinal[0]
-                                                        .isTeam1Winner
+                                                                .data
+                                                                .semifinal
+                                                                .length ==
+                                                            0 ||
+                                                        snapshot
+                                                            .data
+                                                            .semifinal[0]
+                                                            .isTeam1Winner
                                                     ? null
                                                     : () async {
                                                         setState(() {
@@ -254,8 +259,11 @@ class _KnockoutScreenState extends State<KnockoutScreen> {
                                                           loading = false;
                                                         });
                                                       },
-                                                child: Text(
-                                                    '${snapshot.data.semifinal[0].team1.name}'),
+                                                child: Text(snapshot.data
+                                                            .semifinal.length !=
+                                                        0
+                                                    ? '${snapshot.data.semifinal[0].team1.name}'
+                                                    : 'Chưa có'),
                                               ),
                                             )),
                                         Expanded(
@@ -263,9 +271,14 @@ class _KnockoutScreenState extends State<KnockoutScreen> {
                                             child: Center(
                                               child: TextButton(
                                                 onPressed: snapshot
-                                                        .data
-                                                        .semifinal[0]
-                                                        .isTeam2Winner
+                                                                .data
+                                                                .semifinal
+                                                                .length ==
+                                                            0 ||
+                                                        snapshot
+                                                            .data
+                                                            .semifinal[0]
+                                                            .isTeam2Winner
                                                     ? null
                                                     : () async {
                                                         setState(() {
@@ -295,8 +308,11 @@ class _KnockoutScreenState extends State<KnockoutScreen> {
                                                           loading = false;
                                                         });
                                                       },
-                                                child: Text(
-                                                    '${snapshot.data.semifinal[0].team2?.name}'),
+                                                child: Text(snapshot.data
+                                                            .semifinal.length !=
+                                                        0
+                                                    ? '${snapshot.data.semifinal[0].team2?.name}'
+                                                    : 'Chưa có'),
                                               ),
                                             )),
                                         Expanded(
@@ -304,9 +320,14 @@ class _KnockoutScreenState extends State<KnockoutScreen> {
                                             child: Center(
                                               child: TextButton(
                                                 onPressed: snapshot
-                                                        .data
-                                                        .semifinal[1]
-                                                        .isTeam1Winner
+                                                                .data
+                                                                .semifinal
+                                                                .length ==
+                                                            0 ||
+                                                        snapshot
+                                                            .data
+                                                            .semifinal[1]
+                                                            .isTeam1Winner
                                                     ? null
                                                     : () async {
                                                         setState(() {
@@ -336,8 +357,11 @@ class _KnockoutScreenState extends State<KnockoutScreen> {
                                                           loading = false;
                                                         });
                                                       },
-                                                child: Text(
-                                                    '${snapshot.data.semifinal[1].team1?.name}'),
+                                                child: Text(snapshot.data
+                                                            .semifinal.length !=
+                                                        0
+                                                    ? '${snapshot.data.semifinal[1].team1?.name}'
+                                                    : 'Chưa có'),
                                               ),
                                             )),
                                         Expanded(
@@ -345,9 +369,14 @@ class _KnockoutScreenState extends State<KnockoutScreen> {
                                             child: Center(
                                               child: TextButton(
                                                 onPressed: snapshot
-                                                        .data
-                                                        .semifinal[1]
-                                                        .isTeam2Winner
+                                                                .data
+                                                                .semifinal
+                                                                .length ==
+                                                            0 ||
+                                                        snapshot
+                                                            .data
+                                                            .semifinal[1]
+                                                            .isTeam2Winner
                                                     ? null
                                                     : () async {
                                                         setState(() {
@@ -377,8 +406,11 @@ class _KnockoutScreenState extends State<KnockoutScreen> {
                                                           loading = false;
                                                         });
                                                       },
-                                                child: Text(
-                                                    '${snapshot.data.semifinal[1].team2?.name}'),
+                                                child: Text(snapshot.data
+                                                            .semifinal.length !=
+                                                        0
+                                                    ? '${snapshot.data.semifinal[1].team2?.name}'
+                                                    : 'Chưa có'),
                                               ),
                                             ))
                                       ],
