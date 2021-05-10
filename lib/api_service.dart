@@ -178,10 +178,18 @@ class ApiService {
     }
   }
 
-  Future<bool> updateKnockout(String id) async {
+  Future<bool> updateKnockout(
+      String id, bool isTeam1Winner, bool isTeam2Winner) async {
     try {
-      final raw = await http.put(Uri.parse('${_baseUrl}match-knockouts/$id'),
-          headers: _headers);
+      final raw = await http.put(
+          Uri.parse(
+            '${_baseUrl}match-knockouts/$id',
+          ),
+          headers: _headers,
+          body: jsonEncode({
+            "isTeam1Winner": isTeam1Winner,
+            "isTeam2Winner": isTeam2Winner
+          }));
       if (raw.statusCode == 200) {
         return true;
       }

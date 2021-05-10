@@ -9,6 +9,7 @@ class KnockoutScreen extends StatefulWidget {
 
 class _KnockoutScreenState extends State<KnockoutScreen> {
   Future<KnockoutResult> result = ApiService().getKnockoutMatches();
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +20,15 @@ class _KnockoutScreenState extends State<KnockoutScreen> {
           IconButton(
               icon: Icon(Icons.refresh),
               onPressed: () async {
+                setState(() {
+                  loading = true;
+                });
                 await ApiService().refreshKnockout();
                 setState(() {
                   result = ApiService().getKnockoutMatches();
+                });
+                setState(() {
+                  loading = false;
                 });
               })
         ],
@@ -32,7 +39,7 @@ class _KnockoutScreenState extends State<KnockoutScreen> {
             return Column(
               children: [
                 Expanded(
-                  child: snapshot.hasData
+                  child: snapshot.hasData && !loading
                       ? Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -109,18 +116,32 @@ class _KnockoutScreenState extends State<KnockoutScreen> {
                                                             .isTeam1Winner
                                                     ? null
                                                     : () async {
+                                                        setState(() {
+                                                          loading = true;
+                                                        });
                                                         if (await ApiService()
-                                                            .updateKnockout(snapshot
-                                                                .data
-                                                                .knockoutResultFinal[
-                                                                    0]
-                                                                .team1
-                                                                ?.id)) {
+                                                            .updateKnockout(
+                                                                snapshot
+                                                                    .data
+                                                                    .knockoutResultFinal[
+                                                                        0]
+                                                                    .id,
+                                                                true,
+                                                                false)) {
                                                           setState(() {
                                                             result = ApiService()
                                                                 .getKnockoutMatches();
                                                           });
+                                                        } else {
+                                                          ScaffoldMessenger.of(
+                                                                  context)
+                                                              .showSnackBar(SnackBar(
+                                                                  content: Text(
+                                                                      'Thất bại')));
                                                         }
+                                                        setState(() {
+                                                          loading = false;
+                                                        });
                                                       },
                                                 child: Text(snapshot
                                                             .data
@@ -147,18 +168,32 @@ class _KnockoutScreenState extends State<KnockoutScreen> {
                                                             .isTeam2Winner
                                                     ? null
                                                     : () async {
+                                                        setState(() {
+                                                          loading = true;
+                                                        });
                                                         if (await ApiService()
-                                                            .updateKnockout(snapshot
-                                                                .data
-                                                                .knockoutResultFinal[
-                                                                    0]
-                                                                .team2
-                                                                ?.id)) {
+                                                            .updateKnockout(
+                                                                snapshot
+                                                                    .data
+                                                                    .knockoutResultFinal[
+                                                                        0]
+                                                                    .id,
+                                                                false,
+                                                                true)) {
                                                           setState(() {
                                                             result = ApiService()
                                                                 .getKnockoutMatches();
                                                           });
+                                                        } else {
+                                                          ScaffoldMessenger.of(
+                                                                  context)
+                                                              .showSnackBar(SnackBar(
+                                                                  content: Text(
+                                                                      'Thất bại')));
                                                         }
+                                                        setState(() {
+                                                          loading = false;
+                                                        });
                                                       },
                                                 child: Text(snapshot
                                                             .data
@@ -192,19 +227,32 @@ class _KnockoutScreenState extends State<KnockoutScreen> {
                                                         .isTeam1Winner
                                                     ? null
                                                     : () async {
+                                                        setState(() {
+                                                          loading = true;
+                                                        });
                                                         if (await ApiService()
                                                             .updateKnockout(
                                                                 snapshot
                                                                     .data
                                                                     .semifinal[
                                                                         0]
-                                                                    .team1
-                                                                    ?.id)) {
+                                                                    .id,
+                                                                true,
+                                                                false)) {
                                                           setState(() {
                                                             result = ApiService()
                                                                 .getKnockoutMatches();
                                                           });
+                                                        } else {
+                                                          ScaffoldMessenger.of(
+                                                                  context)
+                                                              .showSnackBar(SnackBar(
+                                                                  content: Text(
+                                                                      'Thất bại')));
                                                         }
+                                                        setState(() {
+                                                          loading = false;
+                                                        });
                                                       },
                                                 child: Text(
                                                     '${snapshot.data.semifinal[0].team1.name}'),
@@ -220,19 +268,32 @@ class _KnockoutScreenState extends State<KnockoutScreen> {
                                                         .isTeam2Winner
                                                     ? null
                                                     : () async {
+                                                        setState(() {
+                                                          loading = true;
+                                                        });
                                                         if (await ApiService()
                                                             .updateKnockout(
                                                                 snapshot
                                                                     .data
                                                                     .semifinal[
                                                                         0]
-                                                                    .team2
-                                                                    ?.id)) {
+                                                                    .id,
+                                                                false,
+                                                                true)) {
                                                           setState(() {
                                                             result = ApiService()
                                                                 .getKnockoutMatches();
                                                           });
+                                                        } else {
+                                                          ScaffoldMessenger.of(
+                                                                  context)
+                                                              .showSnackBar(SnackBar(
+                                                                  content: Text(
+                                                                      'Thất bại')));
                                                         }
+                                                        setState(() {
+                                                          loading = false;
+                                                        });
                                                       },
                                                 child: Text(
                                                     '${snapshot.data.semifinal[0].team2?.name}'),
@@ -248,19 +309,32 @@ class _KnockoutScreenState extends State<KnockoutScreen> {
                                                         .isTeam1Winner
                                                     ? null
                                                     : () async {
+                                                        setState(() {
+                                                          loading = true;
+                                                        });
                                                         if (await ApiService()
                                                             .updateKnockout(
                                                                 snapshot
                                                                     .data
                                                                     .semifinal[
                                                                         1]
-                                                                    .team1
-                                                                    ?.id)) {
+                                                                    .id,
+                                                                true,
+                                                                false)) {
                                                           setState(() {
                                                             result = ApiService()
                                                                 .getKnockoutMatches();
                                                           });
+                                                        } else {
+                                                          ScaffoldMessenger.of(
+                                                                  context)
+                                                              .showSnackBar(SnackBar(
+                                                                  content: Text(
+                                                                      'Thất bại')));
                                                         }
+                                                        setState(() {
+                                                          loading = false;
+                                                        });
                                                       },
                                                 child: Text(
                                                     '${snapshot.data.semifinal[1].team1?.name}'),
@@ -276,19 +350,32 @@ class _KnockoutScreenState extends State<KnockoutScreen> {
                                                         .isTeam2Winner
                                                     ? null
                                                     : () async {
+                                                        setState(() {
+                                                          loading = true;
+                                                        });
                                                         if (await ApiService()
                                                             .updateKnockout(
                                                                 snapshot
                                                                     .data
                                                                     .semifinal[
                                                                         1]
-                                                                    .team2
-                                                                    ?.id)) {
+                                                                    .id,
+                                                                false,
+                                                                true)) {
                                                           setState(() {
                                                             result = ApiService()
                                                                 .getKnockoutMatches();
                                                           });
+                                                        } else {
+                                                          ScaffoldMessenger.of(
+                                                                  context)
+                                                              .showSnackBar(SnackBar(
+                                                                  content: Text(
+                                                                      'Thất bại')));
                                                         }
+                                                        setState(() {
+                                                          loading = false;
+                                                        });
                                                       },
                                                 child: Text(
                                                     '${snapshot.data.semifinal[1].team2?.name}'),
