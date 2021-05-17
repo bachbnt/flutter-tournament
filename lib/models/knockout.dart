@@ -37,39 +37,39 @@ class Final {
     this.isTeam2Winner,
     this.level,
     this.id,
-    this.createdAt,
-    this.updatedAt,
     this.v,
-    this.match,
+    this.createdAt,
     this.team1,
     this.team2,
+    this.updatedAt,
     this.finalId,
+    this.match,
   });
 
   bool isTeam1Winner;
   bool isTeam2Winner;
   int level;
   String id;
-  DateTime createdAt;
-  DateTime updatedAt;
   int v;
-  Match match;
-  Team team1;
-  Team team2;
+  DateTime createdAt;
+  Team1 team1;
+  Team1 team2;
+  DateTime updatedAt;
   String finalId;
+  Match match;
 
   factory Final.fromJson(Map<String, dynamic> json) => Final(
         isTeam1Winner: json["isTeam1Winner"],
         isTeam2Winner: json["isTeam2Winner"],
         level: json["level"],
         id: json["_id"],
-        createdAt: DateTime.parse(json["createdAt"]),
-        updatedAt: DateTime.parse(json["updatedAt"]),
         v: json["__v"],
-        match: Match.fromJson(json["match"]),
-        team1: Team.fromJson(json["team1"]),
-        team2: Team.fromJson(json["team2"]),
+        createdAt: DateTime.parse(json["createdAt"]),
+        team1: Team1.fromJson(json["team1"]),
+        team2: Team1.fromJson(json["team2"]),
+        updatedAt: DateTime.parse(json["updatedAt"]),
         finalId: json["id"],
+        match: json["match"] == null ? null : Match.fromJson(json["match"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -77,13 +77,13 @@ class Final {
         "isTeam2Winner": isTeam2Winner,
         "level": level,
         "_id": id,
-        "createdAt": createdAt.toIso8601String(),
-        "updatedAt": updatedAt.toIso8601String(),
         "__v": v,
-        "match": match.toJson(),
+        "createdAt": createdAt.toIso8601String(),
         "team1": team1.toJson(),
         "team2": team2.toJson(),
+        "updatedAt": updatedAt.toIso8601String(),
         "id": finalId,
+        "match": match == null ? null : match.toJson(),
       };
 }
 
@@ -135,8 +135,8 @@ class Match {
       };
 }
 
-class Team {
-  Team({
+class Team1 {
+  Team1({
     this.id,
     this.name,
     this.slug,
@@ -158,7 +158,7 @@ class Team {
   String team1Id;
   String owner;
 
-  factory Team.fromJson(Map<String, dynamic> json) => Team(
+  factory Team1.fromJson(Map<String, dynamic> json) => Team1(
         id: json["_id"],
         name: json["name"],
         slug: json["slug"],
